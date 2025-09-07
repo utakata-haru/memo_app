@@ -243,9 +243,9 @@ class MemoListPage extends HookConsumerWidget {
     context.push('/memos/$memoId');
   }
 
-  /// メモ編集画面への遷移
+  /// メモ編集画面への遷移（詳細画面に遷移して編集モードで開く）
   void _navigateToMemoEdit(BuildContext context, String memoId) {
-    context.push('/memos/$memoId/edit');
+    context.push('/memos/$memoId?edit=true');
   }
 
   /// メモ作成画面への遷移

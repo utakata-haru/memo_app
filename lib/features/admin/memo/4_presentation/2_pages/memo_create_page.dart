@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../3_application/3_notifiers/memo_notifier.dart';
+import '../../3_application/3_notifiers/memo_list_notifier.dart';
 import '../1_widgets/1_atoms/loading_indicator.dart';
 
 /// メモ作成ページ
@@ -158,6 +159,9 @@ class MemoCreatePage extends HookConsumerWidget {
       );
 
       if (context.mounted) {
+        // メモ一覧の状態を自動更新
+        ref.read(memoListNotifierProvider.notifier).getAllMemos();
+        
         // 成功メッセージを表示
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

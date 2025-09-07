@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../1_domain/1_entities/memo_entity.dart';
 import '../../3_application/3_notifiers/memo_notifier.dart';
+import '../../3_application/3_notifiers/memo_list_notifier.dart';
 import '../1_widgets/1_atoms/loading_indicator.dart';
 import '../1_widgets/1_atoms/error_display.dart';
 
@@ -23,8 +24,12 @@ class MemoDetailPage extends HookConsumerWidget {
     // メモの状態を監視
     final memoAsyncValue = ref.watch(memoNotifierProvider);
     
+    // クエリパラメータから編集モードを判定
+    final uri = Uri.parse(GoRouterState.of(context).uri.toString());
+    final shouldEdit = uri.queryParameters['edit'] == 'true';
+    
     // 編集モード状態
-    final isEditing = useState(false);
+    final isEditing = useState(shouldEdit);
     
     // フォームコントローラー（編集時に使用）
     final titleController = useTextEditingController();
@@ -43,6 +48,22 @@ class MemoDetailPage extends HookConsumerWidget {
       });
       return null;
     }, [memoId]);
+    
+    // メモデータが読み込まれた時に編集モードの場合はフォームに値を設定
+    useEffect(() {
+      memoAsyncValue.when(
+        initial: () {},
+        loading: () {},
+        loaded: (memo) {
+          if (isEditing.value) {
+            titleController.text = memo.title;
+            contentController.text = memo.content;
+          }
+        },
+        error: (message) {},
+      );
+      return null;
+    }, [memoAsyncValue, isEditing.value]);
 
     return Scaffold(
       appBar: AppBar(
@@ -284,6 +305,9 @@ class MemoDetailPage extends HookConsumerWidget {
       if (context.mounted) {
         isEditing.value = false;
         
+        // メモ一覧の状態を自動更新
+        ref.read(memoListNotifierProvider.notifier).getAllMemos();
+        
         // 成功メッセージを表示
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -338,6 +362,9 @@ class MemoDetailPage extends HookConsumerWidget {
         await ref.read(memoNotifierProvider.notifier).deleteMemo(memoId);
         
         if (context.mounted) {
+          // メモ一覧の状態を自動更新
+          ref.read(memoListNotifierProvider.notifier).getAllMemos();
+          
           // 成功メッセージを表示
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
