@@ -48,37 +48,11 @@ class MemoListPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('メモ'),
+        title: const Text('メモ一覧'),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.surface,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => _showSearchDialog(context, searchController, searchQuery),
-          ),
-          PopupMenuButton<String>(
-            onSelected: (value) => _handleMenuAction(context, ref, value),
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 'refresh',
-                child: ListTile(
-                  leading: Icon(Icons.refresh),
-                  title: Text('更新'),
-                  contentPadding: EdgeInsets.zero,
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'settings',
-                child: ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text('設定'),
-                  contentPadding: EdgeInsets.zero,
-                ),
-              ),
-            ],
-          ),
-        ],
+        
       ),
       body: Column(
         children: [
