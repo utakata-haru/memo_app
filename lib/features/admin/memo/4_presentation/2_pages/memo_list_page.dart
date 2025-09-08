@@ -153,55 +153,6 @@ class MemoListPage extends HookConsumerWidget {
     );
   }
 
-  /// 検索ダイアログを表示
-  void _showSearchDialog(
-    BuildContext context,
-    TextEditingController controller,
-    ValueNotifier<String> searchQuery,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('メモを検索'),
-        content: TextField(
-          controller: controller,
-          decoration: const InputDecoration(
-            hintText: 'タイトルまたは内容で検索',
-            border: OutlineInputBorder(),
-          ),
-          autofocus: true,
-          onChanged: (value) => searchQuery.value = value,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              controller.clear();
-              searchQuery.value = '';
-              context.pop();
-            },
-            child: const Text('クリア'),
-          ),
-          TextButton(
-            onPressed: () => context.pop(),
-            child: const Text('閉じる'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// メニューアクションの処理
-  void _handleMenuAction(BuildContext context, WidgetRef ref, String action) {
-    switch (action) {
-      case 'refresh':
-        _refreshMemos(ref);
-        break;
-      case 'settings':
-        _navigateToSettings(context);
-        break;
-    }
-  }
-
   /// メモ一覧の再読み込み
   Future<void> _refreshMemos(WidgetRef ref) async {
     await ref.read(memoListNotifierProvider.notifier).refresh();
@@ -225,11 +176,6 @@ class MemoListPage extends HookConsumerWidget {
   /// メモ作成画面への遷移
   void _navigateToMemoCreate(BuildContext context) {
     context.push('/memos/create');
-  }
-
-  /// 設定画面への遷移
-  void _navigateToSettings(BuildContext context) {
-    context.push('/settings');
   }
 
   /// メモ削除確認ダイアログの表示
