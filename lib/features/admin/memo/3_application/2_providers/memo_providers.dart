@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 // ドメイン層
 import '../../1_domain/2_repositories/memo_repository.dart';
 import '../../1_domain/3_usecases/get_all_memos_usecase.dart';
@@ -19,13 +19,13 @@ part 'memo_providers.g.dart';
 
 /// AppDatabaseの依存性注入
 @riverpod
-AppDatabase appDatabase(AppDatabaseRef ref) {
+AppDatabase appDatabase(Ref ref) {
   return AppDatabase();
 }
 
 /// MemoLocalDataSourceの依存性注入
 @riverpod
-MemoLocalDataSource memoLocalDataSource(MemoLocalDataSourceRef ref) {
+MemoLocalDataSource memoLocalDataSource(Ref ref) {
   final database = ref.watch(appDatabaseProvider);
   return MemoLocalDataSourceImpl(database);
 }
@@ -35,7 +35,7 @@ MemoLocalDataSource memoLocalDataSource(MemoLocalDataSourceRef ref) {
 /// MemoLocalDataSourceを使用してMemoRepositoryImplのインスタンスを生成します。
 /// 現在はローカルデータソースのみを使用しています。
 @riverpod
-MemoRepository memoRepository(MemoRepositoryRef ref) {
+MemoRepository memoRepository(Ref ref) {
   final localDataSource = ref.watch(memoLocalDataSourceProvider);
   
   return MemoRepositoryImpl(localDataSource);
@@ -43,28 +43,28 @@ MemoRepository memoRepository(MemoRepositoryRef ref) {
 
 /// GetAllMemosUseCaseの依存性注入
 @riverpod
-GetAllMemosUseCase getAllMemosUseCase(GetAllMemosUseCaseRef ref) {
+GetAllMemosUseCase getAllMemosUseCase(Ref ref) {
   final repository = ref.watch(memoRepositoryProvider);
   return GetAllMemosUseCase(repository);
 }
 
 /// CreateMemoUseCaseの依存性注入
 @riverpod
-CreateMemoUseCase createMemoUseCase(CreateMemoUseCaseRef ref) {
+CreateMemoUseCase createMemoUseCase(Ref ref) {
   final repository = ref.watch(memoRepositoryProvider);
   return CreateMemoUseCase(repository);
 }
 
 /// UpdateMemoUseCaseの依存性注入
 @riverpod
-UpdateMemoUseCase updateMemoUseCase(UpdateMemoUseCaseRef ref) {
+UpdateMemoUseCase updateMemoUseCase(Ref ref) {
   final repository = ref.watch(memoRepositoryProvider);
   return UpdateMemoUseCase(repository);
 }
 
 /// DeleteMemoUseCaseの依存性注入
 @riverpod
-DeleteMemoUseCase deleteMemoUseCase(DeleteMemoUseCaseRef ref) {
+DeleteMemoUseCase deleteMemoUseCase(Ref ref) {  
   final repository = ref.watch(memoRepositoryProvider);
   return DeleteMemoUseCase(repository);
 }

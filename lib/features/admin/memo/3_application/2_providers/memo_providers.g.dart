@@ -6,7 +6,7 @@ part of 'memo_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appDatabaseHash() => r'68c9ad772c198d1a34d2dcccc0a6a35f43092fd5';
+String _$appDatabaseHash() => r'18ce5c8c4d8ddbfe5a7d819d8fb7d5aca76bf416';
 
 /// AppDatabaseの依存性注入
 ///
@@ -26,7 +26,7 @@ final appDatabaseProvider = AutoDisposeProvider<AppDatabase>.internal(
 // ignore: unused_element
 typedef AppDatabaseRef = AutoDisposeProviderRef<AppDatabase>;
 String _$memoLocalDataSourceHash() =>
-    r'59d94f6077ed499880dc53a4393f37b2becdf89c';
+    r'61e9e4078185afa1b2c7f5de96d19f6519b93e24';
 
 /// MemoLocalDataSourceの依存性注入
 ///
@@ -46,7 +46,7 @@ final memoLocalDataSourceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MemoLocalDataSourceRef = AutoDisposeProviderRef<MemoLocalDataSource>;
-String _$memoRepositoryHash() => r'fb8aadd1c368c5b5a2f8a14f576c5c95ce7bed14';
+String _$memoRepositoryHash() => r'fe2dcfea39ee821f91c41801ef0195840256afde';
 
 /// MemoRepositoryの依存性注入
 ///
@@ -69,7 +69,7 @@ final memoRepositoryProvider = AutoDisposeProvider<MemoRepository>.internal(
 // ignore: unused_element
 typedef MemoRepositoryRef = AutoDisposeProviderRef<MemoRepository>;
 String _$getAllMemosUseCaseHash() =>
-    r'3837221f35fb4992aaf5ce7dcf75ceec02fd3254';
+    r'c540a109195145f7bb2910d3c723866740adf731';
 
 /// GetAllMemosUseCaseの依存性注入
 ///
@@ -89,7 +89,7 @@ final getAllMemosUseCaseProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetAllMemosUseCaseRef = AutoDisposeProviderRef<GetAllMemosUseCase>;
-String _$createMemoUseCaseHash() => r'bb77d3b23111889368e80ccd915011031728c38d';
+String _$createMemoUseCaseHash() => r'82a997452562e7787285ac74f8e27b40715e5b22';
 
 /// CreateMemoUseCaseの依存性注入
 ///
@@ -109,7 +109,7 @@ final createMemoUseCaseProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CreateMemoUseCaseRef = AutoDisposeProviderRef<CreateMemoUseCase>;
-String _$updateMemoUseCaseHash() => r'c229aea0ea71f79e32eea0b7302497c04e9a04b6';
+String _$updateMemoUseCaseHash() => r'd64026826e5f6582398084ea28f9eb9765ac6eef';
 
 /// UpdateMemoUseCaseの依存性注入
 ///
@@ -129,7 +129,7 @@ final updateMemoUseCaseProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef UpdateMemoUseCaseRef = AutoDisposeProviderRef<UpdateMemoUseCase>;
-String _$deleteMemoUseCaseHash() => r'9cd04a335379363c5a8722f70d39acd2e1184cbf';
+String _$deleteMemoUseCaseHash() => r'100b78c6188cd1ac664b7f15cdc47bf412d65463';
 
 /// DeleteMemoUseCaseの依存性注入
 ///

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../1_domain/1_entities/memo_entity.dart';
 
 /// メモリストビューウィジェット
@@ -155,13 +156,13 @@ class _MemoListItem extends StatelessWidget {
                   Icon(
                     Icons.access_time,
                     size: 16.0,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                   const SizedBox(width: 4.0),
                   Text(
                     _formatDateTime(memo.updatedAt),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                 ],
@@ -182,12 +183,12 @@ class _MemoListItem extends StatelessWidget {
         content: Text('「${memo.title}」を削除しますか？\nこの操作は取り消せません。'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
+            onPressed: () => context.pop(false),
             child: const Text('キャンセル'),
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(true);
+              context.pop(true);
               onDelete();
             },
             style: TextButton.styleFrom(

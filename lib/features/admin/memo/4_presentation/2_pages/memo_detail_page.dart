@@ -162,7 +162,7 @@ class MemoDetailPage extends HookConsumerWidget {
           // ローディングオーバーレイ
           if (isLoading.value)
             Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               child: const LoadingIndicator(
                 message: 'メモを保存中...',
               ),
@@ -343,11 +343,11 @@ class MemoDetailPage extends HookConsumerWidget {
         content: const Text('このメモを削除しますか？\nこの操作は取り消せません。'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
+            onPressed: () => context.pop(false),
             child: const Text('キャンセル'),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => context.pop(true),
             style: TextButton.styleFrom(
               foregroundColor: Colors.red,
             ),
