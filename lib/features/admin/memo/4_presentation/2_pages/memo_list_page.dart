@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../3_application/3_notifiers/memo_list_notifier.dart';
+import '../../3_application/3_notifiers/memo_notifier.dart';
 import '../1_widgets/3_organisms/memo_list_view.dart';
 import '../1_widgets/2_molecules/memo_search_bar.dart';
 import '../1_widgets/1_atoms/loading_indicator.dart';
@@ -186,6 +187,7 @@ class MemoListPage extends HookConsumerWidget {
   ) async {
     final confirmed = await showDialog<bool>(
       context: context,
+      barrierDismissible: false, // ダイアログ外タップで閉じることを防ぐ
       builder: (context) => AlertDialog(
         title: const Text('メモを削除'),
         content: Text('「${memo.title}」を削除しますか？\nこの操作は取り消せません。'),
@@ -204,20 +206,40 @@ class MemoListPage extends HookConsumerWidget {
     );
 
     if (confirmed == true && context.mounted) {
-      _deleteMemo(context, ref, memo.id);
+      await _deleteMemo(context, ref, memo.id);
     }
   }
 
   /// メモ削除処理
-  void _deleteMemo(BuildContext context, WidgetRef ref, String memoId) {
-    ref.read(memoListNotifierProvider.notifier).removeMemo(memoId);
-    
-    // 削除成功のスナックバーを表示
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('メモを削除しました'),
-        duration: Duration(seconds: 2),
-      ),
-    );
+  Future<void> _deleteMemo(BuildContext context, WidgetRef ref, String memoId) async {
+    try {
+      // データベースからメモを削除
+      await ref.read(memoNotifierProvider.notifier).deleteMemo(memoId);
+      
+      // 削除成功後、メモ一覧を再取得して最新状態を反映
+      await ref.read(memoListNotifierProvider.notifier).getAllMemos();
+      
+      if (context.mounted) {
+        // 削除成功のスナックバーを表示
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('メモを削除しました'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        // エラーメッセージを表示
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('メモの削除に失敗しました: $e'),
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }

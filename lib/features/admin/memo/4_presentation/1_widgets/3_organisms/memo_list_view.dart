@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import '../../../1_domain/1_entities/memo_entity.dart';
 
 /// メモリストビューウィジェット
@@ -114,7 +113,7 @@ class _MemoListItem extends StatelessWidget {
                           onEdit();
                           break;
                         case 'delete':
-                          _showDeleteConfirmation(context);
+                          onDelete(); // 直接削除コールバックを呼び出し
                           break;
                       }
                     },
@@ -174,32 +173,7 @@ class _MemoListItem extends StatelessWidget {
     );
   }
 
-  /// 削除確認ダイアログを表示
-  void _showDeleteConfirmation(BuildContext context) {
-    showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('メモを削除'),
-        content: Text('「${memo.title}」を削除しますか？\nこの操作は取り消せません。'),
-        actions: [
-          TextButton(
-            onPressed: () => context.pop(false),
-            child: const Text('キャンセル'),
-          ),
-          TextButton(
-            onPressed: () {
-              context.pop(true);
-              onDelete();
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
-            child: const Text('削除'),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   /// 日時をフォーマット
   String _formatDateTime(DateTime dateTime) {
